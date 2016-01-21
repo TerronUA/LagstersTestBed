@@ -132,6 +132,7 @@ GameObject:
   - 136: {fileID: 465125810}
   - 114: {fileID: 465125807}
   - 114: {fileID: 465125811}
+  - 114: {fileID: 465125808}
   m_Layer: 0
   m_Name: ToonCar
   m_TagString: Untagged
@@ -152,7 +153,6 @@ Transform:
   - {fileID: 1624436646}
   - {fileID: 743370611}
   - {fileID: 1141105816}
-  - {fileID: 652776380}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!54 &465125806
@@ -181,6 +181,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a21751d0956cabe45a73c79dd0f13522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &465125808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 465125804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e40c825547248b248bd9b4bf1c987638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  onlyInPlayMode: 0
+  sceneViewFollowers:
+  - enable: 1
+    positionOffset: {x: -2.09, y: 2, z: 0.7}
+    enableFixedRotation: 1
+    fixedRotation: {x: 35.6, y: 70, z: 0}
+    targetTransform: {fileID: 465125805}
+    size: 0.01
+    orthographic: 0
+    sceneViewIndex: 0
 --- !u!114 &465125809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,6 +275,7 @@ GameObject:
   - 92: {fileID: 652776378}
   - 124: {fileID: 652776377}
   - 81: {fileID: 652776376}
+  - 114: {fileID: 652776381}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -322,11 +345,27 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 652776375}
   m_LocalRotation: {x: -0.12894098, y: -0.01130756, z: 0.0014702592, w: -0.99158674}
-  m_LocalPosition: {x: -0.078558445, y: 1.3973753, z: -3.2978354}
+  m_LocalPosition: {x: 0.6184416, y: 1.6023754, z: -1.3578353}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 465125805}
-  m_RootOrder: 3
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+--- !u!114 &652776381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 652776375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d84530e9174f8094f9e21a18b578ab0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceAway: 2
+  distanceUp: 0.8
+  smooth: 3
+  follow: {fileID: 1624436646}
+  offset: {x: 0, y: 1.5, z: 0}
 --- !u!1 &656742431
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,7 +545,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!1 &897567269
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,7 +882,7 @@ GameObject:
   - 4: {fileID: 1624436646}
   m_Layer: 0
   m_Name: Colliders
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
