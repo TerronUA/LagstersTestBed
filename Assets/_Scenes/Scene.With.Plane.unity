@@ -128,7 +128,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 465125805}
   - 54: {fileID: 465125806}
-  - 114: {fileID: 465125808}
   - 114: {fileID: 465125809}
   - 136: {fileID: 465125810}
   - 114: {fileID: 465125807}
@@ -182,42 +181,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a21751d0956cabe45a73c79dd0f13522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &465125808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 465125804}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ea65b38d485c374caa584a03f1de571, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_CarDriveType: 2
-  m_WheelColliders:
-  - {fileID: 1951750691}
-  - {fileID: 1599426845}
-  - {fileID: 897567271}
-  - {fileID: 1815722870}
-  m_WheelMeshes:
-  - {fileID: 125033996}
-  - {fileID: 1515196187}
-  - {fileID: 1251310058}
-  - {fileID: 1724177169}
-  m_WheelEffects: []
-  m_CentreOfMassOffset: {x: 0, y: 0, z: 0}
-  m_MaximumSteerAngle: 25
-  m_SteerHelper: 0.501
-  m_TractionControl: 1
-  m_FullTorqueOverAllWheels: 2500
-  m_ReverseTorque: 500
-  m_MaxHandbrakeTorque: 100000000
-  m_Downforce: 100
-  m_SpeedType: 1
-  m_Topspeed: 200
-  m_RevRangeBoundary: 1
-  m_SlipLimit: 0.3
-  m_BrakeTorque: 20000
 --- !u!114 &465125809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,7 +506,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!1 &897567269
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,33 +743,6 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_Enabled: 1
---- !u!1 &1345798710
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1345798711}
-  m_Layer: 0
-  m_Name: Lights
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &1345798711
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1345798710}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
 --- !u!1 &1515196187 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100002, guid: b65173ab0c2524f91928e58cbb43f507, type: 3}
