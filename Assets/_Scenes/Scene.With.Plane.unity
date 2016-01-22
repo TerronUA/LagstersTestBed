@@ -163,11 +163,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e40c825547248b248bd9b4bf1c987638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  on: 0
+  on: 1
   onlyInPlayMode: 0
   sceneViewFollowers:
   - enable: 1
-    positionOffset: {x: -2.09, y: 2, z: 0.7}
+    positionOffset: {x: -2.88, y: 3.03, z: -1.16}
     enableFixedRotation: 1
     fixedRotation: {x: 35.6, y: 70, z: 0}
     targetTransform: {fileID: 465125805}
@@ -333,8 +333,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceAway: 2
-  distanceUp: 0.8
-  smooth: 20
+  distanceUp: 0.5
+  smooth: 100
   follow: {fileID: 1624436646}
   offset: {x: 0, y: 1.5, z: 0}
 --- !u!1 &656742431
