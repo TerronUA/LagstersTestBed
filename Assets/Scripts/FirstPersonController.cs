@@ -6,13 +6,13 @@ public class FirstPersonController : MonoBehaviour
 {
     public float movementSpeed = 10f;
 
-    public float mouseSensitivity = 5.0f;
+//    public float mouseSensitivity = 5.0f;
 
-    public float jumpSpeed = 5.0f;
+//    public float jumpSpeed = 5.0f;
 
     public bool isTiltAxisInverted = false;
 
-    public float upDownRange = 60.0f;
+//    public float upDownRange = 60.0f;
 
     
     float verticalRotation = 0.0f;
@@ -92,8 +92,8 @@ public class FirstPersonController : MonoBehaviour
         //{
         //    verticalVelocity = jumpSpeed;
         //}
-
-        Vector3 speed = new Vector3(sideSpeed, verticalVelocity, forwardSpeed);
+        transform.Rotate(0, sideSpeed, 0);
+        Vector3 speed = new Vector3(0, verticalVelocity, forwardSpeed);
 
         speed = transform.rotation * speed;
 

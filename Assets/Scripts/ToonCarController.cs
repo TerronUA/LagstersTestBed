@@ -23,6 +23,7 @@ namespace Lagsters.Car
         [SerializeField] private GameObject[] m_WheelMeshes = new GameObject[4];
         //[SerializeField] private WheelEffects[] m_WheelEffects = new WheelEffects[4];
         [SerializeField] private Vector3 m_CentreOfMassOffset;
+        [SerializeField] private Transform m_CenterOfMass;
         [SerializeField] private float m_MaximumSteerAngle;
         [Range(0, 1)] [SerializeField] private float m_SteerHelper; // 0 is raw physics , 1 the car will grip in the direction it is facing
         [Range(0, 1)] [SerializeField] private float m_TractionControl; // 0 is no traction control, 1 is full interference
@@ -63,11 +64,15 @@ namespace Lagsters.Car
             {
                 m_WheelMeshLocalRotations[i] = m_WheelMeshes[i].transform.rotation;
             }
-            m_WheelColliders[0].attachedRigidbody.centerOfMass = m_CentreOfMassOffset;
+            //if (m_CenterOfMass)
+            //  m_WheelColliders[0].attachedRigidbody.centerOfMass = m_CenterOfMass.transform.position;
+            //else
+            //  m_WheelColliders[0].attachedRigidbody.centerOfMass = m_CentreOfMassOffset;
 
             m_MaxHandbrakeTorque = float.MaxValue;
 
             m_Rigidbody = GetComponent<Rigidbody>();
+            //m_Rigidbody.centerOfMass = m_CenterOfMass.transform.position;
             m_CurrentTorque = m_FullTorqueOverAllWheels - (m_TractionControl*m_FullTorqueOverAllWheels);
         }
 
@@ -128,6 +133,7 @@ namespace Lagsters.Car
 
         public void Move(float steering, float accel, float footbrake, float handbrake)
         {
+            Debug.Log("Steering = " + steering.ToString() + "; accel = " + accel.ToString());
             for (int i = 0; i < 4; i++)
             {
                 Quaternion quat;
