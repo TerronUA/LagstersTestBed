@@ -35,22 +35,14 @@ public class CarCamera : MonoBehaviour
     /// </summary>
     void OnDrawGizmos()
     {
-        //if (EditorApplication.isPlaying && !EditorApplication.isPaused)
-        //{			
-        //	DebugDraw.DrawDebugFrustum(viewFrustum);
-        //}
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
         targetPosition = follow.position + follow.up * distanceUp - follow.forward * distanceAway;
-        //Debug.DrawRay(follow.position, Vector3.up * distanceUp, Color.red);
-        //Debug.DrawRay(follow.position, -1f * follow.forward * distanceAway, Color.blue);
-        //Debug.DrawRay(follow.position, targetPosition, Color.magenta);
 
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smooth);
-        //transform.rotation = Vector3.Lerp(transform.rotation, follow.rotation, Time.deltaTime * smooth);
 
         Vector3 targetDir = follow.position - transform.position;
         Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, smoothRotation * Time.deltaTime, 0.0F);
@@ -58,12 +50,10 @@ public class CarCamera : MonoBehaviour
         Debug.DrawRay(transform.position, newDir, Color.red);
 
         transform.rotation = Quaternion.LookRotation(newDir);
-        transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
 
+        transform.up = follow.up;
+        Debug.DrawRay(transform.position, transform.up, Color.yellow);
 
-        //transform.up = follow.up;
-        //Debug.DrawRay(transform.position, transform.up, Color.yellow);
-
-        //transform.LookAt(follow);
+        transform.LookAt(follow, transform.up);
     }
 }
