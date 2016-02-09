@@ -4,10 +4,26 @@ using System.Collections.Generic;
 
 public class GravityManager : MonoBehaviour
 {
-    [HideInInspector]
-    public List<Vector3> points;
+//    [HideInInspector]
+    public List<GravityPoint> points;
     [HideInInspector]
     public int activeIndex = -1;
+//    [HideInInspector]
+    public GravityPoint activePoint
+    {
+        get
+        {
+            if ((-1 < activeIndex) && (activeIndex < points.Count))
+                return points[activeIndex];
+            else
+                return null;
+        }
+        set
+        {
+            if ((-1 < activeIndex) && (activeIndex < points.Count))
+                points[activeIndex] = value;
+        }
+    }
 
     private const int drawPointsCount = 3;
 
@@ -31,19 +47,21 @@ public class GravityManager : MonoBehaviour
 
         Gizmos.color = Color.blue;
         for (int i = startDraw; i <= endDraw; i++)
-            Gizmos.DrawSphere(points[i], 1);
+        {
+            if (i > startDraw)
+                Gizmos.DrawLine(points[i].position, points[i - 1].position);
+            Gizmos.DrawSphere(points[i].position, 0.5f);
+        }
+            
     }
 
     public int AddPoint()
     {
-        Vector3 newPoint;
+        GravityPoint newPoint;
         if (points.Count > 0)
-        {
-            newPoint = points[points.Count - 1];
-            newPoint = new Vector3(newPoint.x, newPoint.y, newPoint.z);
-        }
+            newPoint = new GravityPoint(points[points.Count - 1]);
         else
-            newPoint = new Vector3(0, 0, 0);
+            newPoint = new GravityPoint();
 
         points.Add(newPoint);
 
@@ -53,12 +71,6 @@ public class GravityManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        points = new List<GravityPoint>();
     }
 }

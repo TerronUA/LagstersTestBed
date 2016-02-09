@@ -6,11 +6,15 @@ using System.Collections;
 public class GravityManagerEditor : Editor
 {
     public int activeItemIndex = -1;
+    GravityManager _target;
+
+    void Awake()
+    {
+        _target = target as GravityManager;
+    }
 
     public override void OnInspectorGUI()
     {
-        GravityManager _target = target as GravityManager;
-
         base.OnInspectorGUI();
         GUILayout.Label("Gravity Item Creation");
         GUILayout.BeginHorizontal();
@@ -23,11 +27,18 @@ public class GravityManagerEditor : Editor
 
         GUILayout.EndHorizontal();
 
-
         //GUILayout.BeginHorizontal();
         GUILayout.Label("Active Item:");
         _target.activeIndex = (int)GUILayout.HorizontalSlider(_target.activeIndex, 0, _target.points.Count);
-        //GUILayout.EndHorizontal();
-        
+
+        // "yourPropertyName" is the name of a property which has a custom property drawer
+        // implemented for its class type
+        //if (_target.activePoint)
+        //{
+            //var serializedObject = new UnityEditor.SerializedObject(_target.activePoint);
+
+        //}
+
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("activePoint"));
     }
 }
