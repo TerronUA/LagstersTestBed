@@ -583,7 +583,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
 --- !u!114 &497132047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -596,13 +596,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points:
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: 5, y: 6, z: 2}
+    gravity: 9.4
+  - position: {x: 3, y: 4, z: 5}
     gravity: 9.8
-  - position: {x: 10, y: 10, z: 10}
-    gravity: 9.8
-  - position: {x: 20, y: 20, z: 20}
-    gravity: 9.8
-  activeIndex: 0
+  - position: {x: 10, y: 1, z: 2}
+    gravity: 0
+  - position: {x: 15, y: 1, z: 2}
+    gravity: 0
+  - position: {x: 20, y: 1, z: 2}
+    gravity: 0
+  - position: {x: 25, y: 1, z: 2}
+    gravity: 0
+  - position: {x: 30, y: 1, z: 2}
+    gravity: 0
+  activeIndex: 4
 --- !u!1001 &644716189
 Prefab:
   m_ObjectHideFlags: 0

@@ -22,8 +22,13 @@ public class GravityManagerEditor : Editor
         if (GUILayout.Button("Add"))
         {
             _target.activeIndex = _target.AddPoint();
+            Undo.RecordObject(_target, "GravityManager.AddPoint()");
         }
-        GUILayout.Button("Delete");
+        if (GUILayout.Button("Delete"))
+        {
+            _target.DeletePoint();
+            Undo.RecordObject(_target, "GravityManager.DeletePoint()");
+        }
 
         GUILayout.EndHorizontal();
 
@@ -33,12 +38,19 @@ public class GravityManagerEditor : Editor
 
         // "yourPropertyName" is the name of a property which has a custom property drawer
         // implemented for its class type
-        //if (_target.activePoint)
-        //{
-            //var serializedObject = new UnityEditor.SerializedObject(_target.activePoint);
+        if (_target.activePoint != null)
+        {
+            //Object onj = (Object)_target.activePoint;
+            //var sObject = new UnityEditor.SerializedObject(onj);
+            //var sProp = sObject.FindProperty("position");
+            //EditorGUILayout.PropertyField(sProp);
+            if (serializedObject != null)
+            {
+             //   EditorGUILayout.PropertyField(serializedObject.FindProperty("activePoint"));
+            }
 
-        //}
+        }
 
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("activePoint"));
+        //
     }
 }

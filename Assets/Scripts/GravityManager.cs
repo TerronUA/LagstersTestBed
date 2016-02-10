@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 public class GravityManager : MonoBehaviour
 {
-//    [HideInInspector]
+    //[HideInInspector]
     public List<GravityPoint> points;
     [HideInInspector]
     public int activeIndex = -1;
-//    [HideInInspector]
+    [HideInInspector] 
     public GravityPoint activePoint
     {
         get
         {
-            if ((-1 < activeIndex) && (activeIndex < points.Count))
+            if ((points.Count > 0) && (-1 < activeIndex) && (activeIndex < points.Count))
                 return points[activeIndex];
             else
                 return null;
@@ -32,7 +32,7 @@ public class GravityManager : MonoBehaviour
     /// </summary>
     void OnDrawGizmos()
     {
-        if (points.Count == 0)
+        if (points.Count <= 0)
             return;
 
         if (activeIndex < 0)
@@ -48,24 +48,42 @@ public class GravityManager : MonoBehaviour
         Gizmos.color = Color.blue;
         for (int i = startDraw; i <= endDraw; i++)
         {
-            if (i > startDraw)
-                Gizmos.DrawLine(points[i].position, points[i - 1].position);
-            Gizmos.DrawSphere(points[i].position, 0.5f);
+            if (points[i] != null)
+            {
+                if (i > startDraw)
+                    Gizmos.DrawLine(points[i].position, points[i - 1].position);
+                Gizmos.DrawSphere(points[i].position, 0.5f);
+            }
         }
-            
     }
 
     public int AddPoint()
     {
         GravityPoint newPoint;
         if (points.Count > 0)
-            newPoint = new GravityPoint(points[points.Count - 1]);
-        else
+        {
             newPoint = new GravityPoint();
+            newPoint.position = new Vector3(0, 1, 2);//(points[points.Count - 1]);
+        }
+        else
+        {
+            newPoint = new GravityPoint();
+            newPoint.position = new Vector3(5, 6, 7);
+        }
 
         points.Add(newPoint);
 
         return points.IndexOf(newPoint);
+    }
+
+    public void DeletePoint()
+    {
+        if ((points.Count > 0) && (-1 < activeIndex) && (activeIndex < points.Count))
+        {
+            points.RemoveAt(activeIndex);
+            if (activeIndex >= points.Count)
+                activeIndex = points.Count - 1;
+        }
     }
 
     // Use this for initialization

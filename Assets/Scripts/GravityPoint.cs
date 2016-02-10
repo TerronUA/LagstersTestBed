@@ -1,21 +1,21 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
+using UnityEngine;
 
-[System.Serializable]
-public class GravityPoint
+[Serializable]
+public class GravityPoint// : UnityEngine.Object
 {
     public Vector3 position;
     public float gravity;
 
-    public GravityPoint()
-    {
-        position = Vector3.zero;
-        gravity = 9.8f;
-    }
+    //public GravityPoint()
+    //{
+    //    position = Vector3.zero;
+    //    gravity = 9.8f;
+    //}
 
-    public GravityPoint(GravityPoint other)
-    {
-        position = other.position;
-        gravity = other.gravity;
-    }
+    //public GravityPoint(GravityPoint other)
+    //{
+    //    position = other.position;
+    //    gravity = other.gravity;
+    //}
 }
