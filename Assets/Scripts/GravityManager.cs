@@ -4,28 +4,37 @@ using System.Collections.Generic;
 
 public class GravityManager : MonoBehaviour
 {
-    //[HideInInspector]
+    [HideInInspector]
     public List<GravityPoint> points;
     [HideInInspector]
     public int activeIndex = -1;
-    [HideInInspector] 
-    public GravityPoint activePoint
+    [HideInInspector]
+    public GravityPoint activePoint = null;
+    [HideInInspector]
+    public GravityPoint ActivePoint
     {
         get
         {
-            if ((points.Count > 0) && (-1 < activeIndex) && (activeIndex < points.Count))
-                return points[activeIndex];
-            else
-                return null;
+            UpdateActivePoint();
+            return activePoint;
         }
         set
         {
-            if ((-1 < activeIndex) && (activeIndex < points.Count))
-                points[activeIndex] = value;
+            UpdateActivePoint();
+            if (activePoint != null)
+                activePoint = value;
         }
     }
 
-    private const int drawPointsCount = 3;
+    const int drawPointsCount = 3;
+
+    public void UpdateActivePoint()
+    {
+        if ((-1 < activeIndex) && (activeIndex < points.Count))
+            activePoint = points[activeIndex];
+        else
+            activePoint = null;
+    }
 
     /// <summary>
     /// Debugging information should be put here.
@@ -73,6 +82,8 @@ public class GravityManager : MonoBehaviour
 
         points.Add(newPoint);
 
+        UpdateActivePoint();
+
         return points.IndexOf(newPoint);
     }
 
@@ -84,6 +95,8 @@ public class GravityManager : MonoBehaviour
             if (activeIndex >= points.Count)
                 activeIndex = points.Count - 1;
         }
+
+        UpdateActivePoint();
     }
 
     // Use this for initialization

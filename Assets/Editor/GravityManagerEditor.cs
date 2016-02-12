@@ -5,52 +5,71 @@ using System.Collections;
 [CustomEditor(typeof(GravityManager))]
 public class GravityManagerEditor : Editor
 {
-    public int activeItemIndex = -1;
     GravityManager _target;
+    SerializedProperty activeItemIndex;
+    SerializedProperty activeItem;
 
     void Awake()
     {
         _target = target as GravityManager;
+        activeItemIndex = serializedObject.FindProperty("activeIndex");
+        activeItem = serializedObject.FindProperty("activePoint");
     }
 
     public override void OnInspectorGUI()
     {
+        serializedObject.Update();
+
         base.OnInspectorGUI();
+
         GUILayout.Label("Gravity Item Creation");
         GUILayout.BeginHorizontal();
 
         if (GUILayout.Button("Add"))
         {
             _target.activeIndex = _target.AddPoint();
-            Undo.RecordObject(_target, "GravityManager.AddPoint()");
+            SceneView.RepaintAll();
         }
         if (GUILayout.Button("Delete"))
         {
             _target.DeletePoint();
-            Undo.RecordObject(_target, "GravityManager.DeletePoint()");
+            SceneView.RepaintAll();
         }
 
         GUILayout.EndHorizontal();
 
-        //GUILayout.BeginHorizontal();
-        GUILayout.Label("Active Item:");
-        _target.activeIndex = (int)GUILayout.HorizontalSlider(_target.activeIndex, 0, _target.points.Count);
+        EditorGUILayout.LabelField("Active Item");
+        EditorGUILayout.IntSlider(activeItemIndex, 0, _target.points.Count - 1, new GUIContent("Current Item"));
 
-        // "yourPropertyName" is the name of a property which has a custom property drawer
-        // implemented for its class type
-        if (_target.activePoint != null)
-        {
-            //Object onj = (Object)_target.activePoint;
-            //var sObject = new UnityEditor.SerializedObject(onj);
-            //var sProp = sObject.FindProperty("position");
-            //EditorGUILayout.PropertyField(sProp);
-            if (serializedObject != null)
-            {
-             //   EditorGUILayout.PropertyField(serializedObject.FindProperty("activePoint"));
-            }
 
-        }
+        _target.UpdateActivePoint();
+
+        Rect position = EditorGUILayout.GetControlRect();
+
+        GUIContent label = EditorGUI.BeginProperty(position, new GUIContent("Active Point"), activeItem);
+        Rect contentPosition = EditorGUI.PrefixLabel(position, label);
+        contentPosition.width *= 0.25f;
+        int indent = EditorGUI.indentLevel;
+        EditorGUI.indentLevel = 0;
+        EditorGUIUtility.labelWidth = 14f;
+
+        SerializedProperty activeItemPos = activeItem.FindPropertyRelative("position");
+
+        EditorGUI.PropertyField(contentPosition, activeItemPos.FindPropertyRelative("x"));
+
+        contentPosition.x += contentPosition.width;
+        EditorGUI.PropertyField(contentPosition, activeItemPos.FindPropertyRelative("y"));
+
+        contentPosition.x += contentPosition.width;
+        EditorGUI.PropertyField(contentPosition, activeItemPos.FindPropertyRelative("z"));
+
+        contentPosition.x += contentPosition.width;
+        EditorGUI.PropertyField(contentPosition, activeItem.FindPropertyRelative("gravity"), new GUIContent("G"));
+
+        EditorGUI.indentLevel = indent;
+        EditorGUI.EndProperty();
 
         //
+        serializedObject.ApplyModifiedProperties();
     }
 }

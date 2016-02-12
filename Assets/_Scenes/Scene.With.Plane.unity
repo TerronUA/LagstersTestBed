@@ -597,20 +597,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points:
   - position: {x: 5, y: 6, z: 2}
-    gravity: 9.4
+    gravity: 10
   - position: {x: 3, y: 4, z: 5}
-    gravity: 9.8
+    gravity: 10
   - position: {x: 10, y: 1, z: 2}
-    gravity: 0
+    gravity: 10
   - position: {x: 15, y: 1, z: 2}
-    gravity: 0
+    gravity: 10
   - position: {x: 20, y: 1, z: 2}
-    gravity: 0
+    gravity: 10
   - position: {x: 25, y: 1, z: 2}
-    gravity: 0
+    gravity: 10
   - position: {x: 30, y: 1, z: 2}
+    gravity: 10
+  - position: {x: 35, y: 1, z: 2}
     gravity: 0
-  activeIndex: 4
+  - position: {x: 40, y: 1, z: 2}
+    gravity: 10
+  - position: {x: 45, y: 1, z: 2}
+    gravity: 0
+  - position: {x: 50, y: 1, z: 2}
+    gravity: 0
+  - position: {x: 60, y: 1, z: 2}
+    gravity: 0
+  activeIndex: 8
+  activePoint:
+    position: {x: 40, y: 1, z: 2}
+    gravity: 10
 --- !u!1001 &644716189
 Prefab:
   m_ObjectHideFlags: 0
