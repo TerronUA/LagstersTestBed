@@ -7,7 +7,7 @@ using System.Collections;
 public class CarCameraEditor : Editor
 {
     private ArrayList sceneViews;
-    private SceneView sceneView;
+//    private SceneView sceneView;
 
     public override void OnInspectorGUI()
     {
@@ -19,7 +19,7 @@ public class CarCameraEditor : Editor
 
             if (_target.follow)
             {
-                sceneView = (SceneView)sceneViews[0];
+//                sceneView = (SceneView)sceneViews[0];
 
 //                _target.sceneViewFollowers[0].positionOffset = sceneView.camera.transform.position - _target.follow.transform.position;
 //                _target.sceneViewFollowers[0].fixedRotation = sceneView.rotation.eulerAngles;

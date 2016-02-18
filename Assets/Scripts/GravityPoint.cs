@@ -4,7 +4,8 @@ using UnityEngine;
 [Serializable]
 public class GravityPoint// : UnityEngine.Object
 {
-    public Vector3 position;
+    public Vector3 position = Vector3.zero;
+    public Quaternion rotation = Quaternion.identity;
     public float gravity;
 
     //public GravityPoint()

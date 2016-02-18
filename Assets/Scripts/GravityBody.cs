@@ -4,6 +4,7 @@ using System.Collections;
 //[RequireComponent(typeof(Rigidbody))]
 public class GravityBody : MonoBehaviour
 {
+    public GravityManager gm;
     public Transform startPoint;
     public Transform endPoint;
     public float gravity = 10f;
@@ -16,6 +17,8 @@ public class GravityBody : MonoBehaviour
     {
         rbody = GetComponent<Rigidbody>();
         rbody.useGravity = false;
+
+        gm = FindObjectOfType<GravityManager>();
     }
 
     // Update is called once per frame

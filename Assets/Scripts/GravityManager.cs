@@ -1,16 +1,23 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
 public class GravityManager : MonoBehaviour
 {
-    [HideInInspector]
+    public LayerMask layerMask;
+    public float offset = 10f;
+
+    public bool useLastPointGravity = false;
+
+    public float gravity = 9.8f;
+
     public List<GravityPoint> points;
-    [HideInInspector]
+
     public int activeIndex = -1;
-    [HideInInspector]
+
     public GravityPoint activePoint = null;
-    [HideInInspector]
+
     public GravityPoint ActivePoint
     {
         get
@@ -26,8 +33,6 @@ public class GravityManager : MonoBehaviour
         }
     }
 
-    const int drawPointsCount = 3;
-
     public void UpdateActivePoint()
     {
         if ((-1 < activeIndex) && (activeIndex < points.Count))
@@ -36,55 +41,33 @@ public class GravityManager : MonoBehaviour
             activePoint = null;
     }
 
-    /// <summary>
-    /// Debugging information should be put here.
-    /// </summary>
-    void OnDrawGizmos()
-    {
-        if (points.Count <= 0)
-            return;
-
-        if (activeIndex < 0)
-            return;
-
-        int startDraw = activeIndex - drawPointsCount;
-        if (startDraw < 0)
-            startDraw = 0;
-        int endDraw = activeIndex + drawPointsCount;
-        if (endDraw > points.Count - 1)
-            endDraw = points.Count - 1;
-
-        Gizmos.color = Color.blue;
-        for (int i = startDraw; i <= endDraw; i++)
-        {
-            if (points[i] != null)
-            {
-                if (i > startDraw)
-                    Gizmos.DrawLine(points[i].position, points[i - 1].position);
-                Gizmos.DrawSphere(points[i].position, 0.5f);
-            }
-        }
-    }
-
     public int AddPoint()
     {
-        GravityPoint newPoint;
-        if (points.Count > 0)
+        GravityPoint newPoint = new GravityPoint();
+        switch (points.Count)
         {
-            newPoint = new GravityPoint();
-            newPoint.position = new Vector3(0, 1, 2);//(points[points.Count - 1]);
+            case 0:
+                break;
+            case 1:
+                newPoint.position = points[points.Count - 1].position;
+                newPoint.position += Vector3.forward * offset;
+                break;
+            default:
+                newPoint.position = points[points.Count - 1].position;
+                newPoint.position += (points[points.Count - 1].position - points[points.Count - 2].position).normalized * offset;
+                break;
         }
+
+        if (useLastPointGravity && (points.Count > 0))
+            newPoint.gravity = points[points.Count - 1].gravity;
         else
-        {
-            newPoint = new GravityPoint();
-            newPoint.position = new Vector3(5, 6, 7);
-        }
+            newPoint.gravity = gravity;
 
         points.Add(newPoint);
 
         UpdateActivePoint();
 
-        return points.IndexOf(newPoint);
+        return points.Count - 1;
     }
 
     public void DeletePoint()
@@ -99,9 +82,87 @@ public class GravityManager : MonoBehaviour
         UpdateActivePoint();
     }
 
+    public void DeleteAllPoints()
+    {
+        points.Clear();
+
+        activeIndex = -1;
+        UpdateActivePoint();
+
+    }
+
+    public void RealignPoint()
+    {
+        //const int countRealignPoint = 15;
+
+        // Dont calculate position if less then 2 points - we dont have direction
+        if (points.Count < 2)
+            return;
+
+        UpdateActivePoint();
+
+        if (activePoint == null)
+            return;
+
+        Vector3 otherPoint;
+        if (activeIndex > 0)
+            otherPoint = points[activeIndex - 1].position;
+        else
+            otherPoint = points[activeIndex + 1].position;
+
+        activePoint.position = CalculateNewPointPosition(activePoint.position, otherPoint);
+
+        // Calculate new forward direction
+        otherPoint = activePoint.position + (activePoint.position - otherPoint).normalized;
+        Debug.DrawLine(activePoint.position, otherPoint * 3);
+        otherPoint = CalculateNewPointPosition(otherPoint, activePoint.position);
+        Debug.DrawLine(activePoint.position, otherPoint * 3, Color.cyan);
+        activePoint.rotation = Quaternion.LookRotation(otherPoint);
+    }
+
+    Vector3 CalculateNewPointPosition(Vector3 point, Vector3 previousPoint)
+    {
+        const int countRealignPoint = 15;
+        Vector3 newPos;
+        
+        for (int i = 0; i < countRealignPoint; i++)
+        {
+            Vector3 p1 = Vector3.Cross(point - previousPoint, Vector3.one).normalized;
+            Vector3 p2 = Vector3.Cross(point - previousPoint, point - p1).normalized;
+
+            RaycastHit hit;
+
+            List<Vector3> hitPoints = new List<Vector3>();
+
+            // Does the ray intersect any objects excluding the player layer
+            if (Physics.Raycast(point, p1, out hit, Mathf.Infinity, layerMask))
+                hitPoints.Add(hit.point);
+            if (Physics.Raycast(point, -p1, out hit, Mathf.Infinity, layerMask))
+                hitPoints.Add(hit.point);
+            if (Physics.Raycast(point, p2, out hit, Mathf.Infinity, layerMask))
+                hitPoints.Add(hit.point);
+            if (Physics.Raycast(point, -p2, out hit, Mathf.Infinity, layerMask))
+                hitPoints.Add(hit.point);
+
+            newPos = Vector3.zero;
+            foreach (var pt in hitPoints)
+                newPos += pt;
+            if (hitPoints.Count > 0)
+                newPos /= hitPoints.Count;
+
+            point = newPos;
+        }
+
+        return point;
+    }
+
     // Use this for initialization
     void Start()
     {
         points = new List<GravityPoint>();
+    }
+
+    void Update()
+    {
     }
 }
